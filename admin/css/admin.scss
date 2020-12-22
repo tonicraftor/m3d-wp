@@ -3,6 +3,7 @@
 
 .m3d-scenelist{
     .action-btn {
+        margin: 0 5px;
         display: inline-flex;
         width: 25px;
         height: 25px;
@@ -12,11 +13,93 @@
         border-radius: 50%;
         box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
         cursor: pointer;
-        transition: 500ms;
+        transition: background-color 500ms;
+
+        &:hover {
+            background-color: #64FFDA;
+        }
 
         & > img {
             width: 18px;
             height: 18px;
+        }
+    }
+
+    .btns{}
+
+    .scene-table{
+        .title {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+    }
+}
+
+.m3-app {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #222222;
+    .wrap {
+        margin: 0;
+    }
+    li {
+        margin-bottom: 0;
+    }
+    input{
+        min-height: unset;
+        box-shadow: unset;
+        border-radius: unset;
+        border: none;
+        background-color: transparent;
+        color: unset;
+        line-height: unset;
+        padding: unset;
+        
+        &:disabled{
+            opacity: unset;
+            &:disabled::before {
+                display: none;
+            }
+        }
+        
+        &:focus{
+            outline: none;
+            border: none;
+            box-shadow: unset;
+        }
+    }
+    input.MuiInputBase-input {
+        padding: 6px 0 7px;
+    }
+    .m3-fieldgroup {
+        input.MuiInputBase-input {
+            padding: 2px 5px;
+        }
+    }
+    
+    select {
+        font-size: unset;
+        line-height: unset;
+        color: unset;
+        box-shadow: unset;
+        border-radius: unset;
+        border: none;
+        background: unset;
+        min-height: unset;
+
+        &:hover {
+            color: unset;
+        }
+        &:focus {
+            box-shadow: unset;
+        }
+    }
+    .m3-dragbar{
+        & > .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
         }
     }
 }

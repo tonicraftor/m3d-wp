@@ -1,4 +1,5 @@
 .m3d-scenelist .action-btn {
+  margin: 0 5px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -15,12 +16,104 @@
   -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
           box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  -webkit-transition: 500ms;
-  transition: 500ms;
+  -webkit-transition: background-color 500ms;
+  transition: background-color 500ms;
+}
+
+.m3d-scenelist .action-btn:hover {
+  background-color: #64FFDA;
 }
 
 .m3d-scenelist .action-btn > img {
   width: 18px;
   height: 18px;
+}
+
+.m3d-scenelist .scene-table .title {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.m3-app {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #222222;
+}
+
+.m3-app .wrap {
+  margin: 0;
+}
+
+.m3-app li {
+  margin-bottom: 0;
+}
+
+.m3-app input {
+  min-height: unset;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+  border-radius: unset;
+  border: none;
+  background-color: transparent;
+  color: unset;
+  line-height: unset;
+  padding: unset;
+}
+
+.m3-app input:disabled {
+  opacity: unset;
+}
+
+.m3-app input:disabled:disabled::before {
+  display: none;
+}
+
+.m3-app input:focus {
+  outline: none;
+  border: none;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+
+.m3-app input.MuiInputBase-input {
+  padding: 6px 0 7px;
+}
+
+.m3-app .m3-fieldgroup input.MuiInputBase-input {
+  padding: 2px 5px;
+}
+
+.m3-app select {
+  font-size: unset;
+  line-height: unset;
+  color: unset;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+  border-radius: unset;
+  border: none;
+  background: unset;
+  min-height: unset;
+}
+
+.m3-app select:hover {
+  color: unset;
+}
+
+.m3-app select:focus {
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+
+.m3-app .m3-dragbar > .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
 }
 /*# sourceMappingURL=admin.css.map */
