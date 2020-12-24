@@ -5,78 +5,192 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $filename = filter_input(INPUT_GET, 'filename');
 $where = filter_input(INPUT_GET, 'where');
-$config_libs = array(
-    'root' => Material3dWP::get_meta('config_lib_root'),
-    'object3d' => Material3dWP::get_meta('config_lib_object3d'),
-    'texture' => Material3dWP::get_meta('config_lib_texture'),
-    'material' => Material3dWP::get_meta('config_lib_material'),
-    'forceField' => Material3dWP::get_meta('config_lib_forceField'),
-    'animation' => Material3dWP::get_meta('config_lib_animation')
-);
-$config_files = array(
-    'upload_url' => Material3dWP::get_meta('config_files_upload'),
-    'download_url' => Material3dWP::get_meta('config_files_download')
-);
 ?>
 <h1 class="wp-heading-inline">Material3d Editor</h1>
 <?php
 if(current_user_can( 'edit_m3d_scene' )):
+    $post_arr = filter_input_array(INPUT_POST);
+    if($post_arr && isset($post_arr['_wpnonce']) && wp_verify_nonce($post_arr['_wpnonce'], 'm3d_settings_form')){
+        if(isset($post_arr['lib-root'])){
+            Material3dWP::update_meta('config_lib_root', $post_arr['lib-root'], $post_arr['lib-root-txt'] ?? '');
+        }
+        if(isset($post_arr['lib-obj3d'])){
+            Material3dWP::update_meta('config_lib_object3d', 0, $post_arr['lib-obj3d']);
+        }
+        if(isset($post_arr['lib-tex'])){
+            Material3dWP::update_meta('config_lib_texture', 0, $post_arr['lib-tex']);
+        }
+        if(isset($post_arr['lib-mat'])){
+            Material3dWP::update_meta('config_lib_material', 0, $post_arr['lib-mat']);
+        }
+        if(isset($post_arr['lib-ff'])){
+            Material3dWP::update_meta('config_lib_forceField', 0, $post_arr['lib-ff']);
+        }
+        if(isset($post_arr['lib-anim'])){
+            Material3dWP::update_meta('config_lib_animation', 0, $post_arr['lib-anim']);
+        }
+        if(isset($post_arr['files-up'])){
+            Material3dWP::update_meta('config_files_upload', $post_arr['files-up'], $post_arr['files-up-txt'] ?? '');
+        }
+        if(isset($post_arr['files-down'])){
+            Material3dWP::update_meta('config_files_download', $post_arr['files-down'], $post_arr['files-down-txt'] ?? '');
+        }
+    }
+    $lib_root = Material3dWP::get_meta('config_lib_root');
+    $lib_obj3d = Material3dWP::get_meta('config_lib_object3d') ->meta_txt;
+    $lib_tex = Material3dWP::get_meta('config_lib_texture') ->meta_txt;
+    $lib_mat = Material3dWP::get_meta('config_lib_material') ->meta_txt;
+    $lib_ff = Material3dWP::get_meta('config_lib_forceField') ->meta_txt;
+    $lib_anim = Material3dWP::get_meta('config_lib_animation') ->meta_txt;
+    $files_up = Material3dWP::get_meta('config_files_upload');
+    $files_down = Material3dWP::get_meta('config_files_download');
 ?>
-<div>
-<input type="text" id="m3d-filename" value="<?=($filename ? $filename : '')?>">
-<button type="button" onclick="onSaveScene()">Save</button>
+<div class="m3d-editor-btns">
+    <div>
+        <a onclick="onSettings(this)" class="btn-settings hide"><img src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"></a>
+        <input type="text" id="m3d-filename" value="<?=($filename ? $filename : '')?>">
+        <button type="button" onclick="onSaveScene()">Save</button>
+    </div>
+    <form action="<?=$_SERVER['REQUEST_URI']?>" method="post" class="m3d-settings hide" id="m3d-settings-form">
+        <?php wp_nonce_field( 'm3d_settings_form'); ?>
+        <div class="section">
+            <div class="title">Libraries</div>
+            <div class="fields">
+                <div>Root URL:</div>
+                <?php
+                    $checked = ['', '', ''];
+                    $checked[$lib_root ->meta_value] = ' checked';
+                ?>
+                <div>
+                    <div>
+                        <input type="radio" id="lib-root-0" name="lib-root" value="0"<?=$checked[0]?>>
+                        <label for="lib-root-0">Local</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="lib-root-1" name="lib-root" value="1"<?=$checked[1]?>>
+                        <label for="lib-root-1">Material3d.net</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="lib-root-2" name="lib-root" value="2"<?=$checked[2]?>>
+                        <label for="lib-root-2">Other</label>
+                        <input type="text" name="lib-root-txt" value="<?=$lib_root ->meta_txt?>">
+                    </div>
+                </div>
+                <div>Object3d Libraries:</div>
+                <div>
+                    <textarea name="lib-obj3d" cols="30" rows="10"><?=$lib_obj3d?></textarea>
+                </div>
+                <div>Texture Library:</div>
+                <div>
+                    <input type="text" name="lib-tex" value="<?=$lib_tex?>">
+                </div>
+                <div>Material Library:</div>
+                <div>
+                    <input type="text" name="lib-mat" value="<?=$lib_mat?>">
+                </div>
+                <div>Forcefield Library:</div>
+                <div>
+                    <input type="text" name="lib-ff" value="<?=$lib_ff?>">
+                </div>
+                <div>Animation Library:</div>
+                <div>
+                    <input type="text" name="lib-anim" value="<?=$lib_anim?>">
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="title">Scene Files</div>
+            <div class="fields">
+                <div>Upload URL:</div>
+                <?php
+                    $checked = ['', ''];
+                    $checked[$files_up ->meta_value] = ' checked';
+                ?>
+                <div>
+                    <div>
+                        <input type="radio" id="files-up-0" name="files-up" value="0"<?=$checked[0]?>>
+                        <label for="files-up-0">Local</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="files-up-1" name="files-up" value="1"<?=$checked[1]?>>
+                        <label for="files-up-1">Other</label>
+                        <input type="text" name="files-up-txt" value="<?=$files_up ->meta_txt?>">
+                    </div>
+                </div>
+                <div>Download URL:</div>
+                <?php
+                    $checked = ['', '', ''];
+                    $checked[$files_down ->meta_value] = ' checked';
+                ?>
+                <div>
+                    <div>
+                        <input type="radio" id="files-down-0" name="files-down" value="0"<?=$checked[0]?>>
+                        <label for="files-down-0">Local</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="files-down-1" name="files-down" value="1"<?=$checked[1]?>>
+                        <label for="files-down-1">Gallery</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="files-down-2" name="files-down" value="2"<?=$checked[2]?>>
+                        <label for="files-down-2">Other</label>
+                        <input type="text" name="files-down-txt" value="<?=$files_down ->meta_txt?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <button type="submit">Save Settings</button>
+        </div>
+    </form>
 </div>
-
 <?php else: ?>
 <div class="m3d-page-info">
     Current user can not edit m3d scenes. Use the role "m3d_editor" or the capability "edit_m3d_scene".
 </div>
 <?php endif ?>
-<div>
+<div class="m3d-editor-wrap">
     <div id="m3d-editor"></div>
     <script src="<?=plugin_dir_url( __FILE__ )?>js/config.js"></script>
     <script src="<?=plugin_dir_url( __FILE__ )?>js/material3deditor.js"></script>
     <script>
         MATERIAL3DEDITOR_CONFIG.libraries = {
             root: '<?php
-                $libs_root = $config_libs['root'];
-                if($libs_root ->meta_value == 0){
+                if($lib_root ->meta_value == 0){
                     echo M3DWP_URL;
                 }
-                else if($libs_root ->meta_value == 1){
+                else if($lib_root ->meta_value == 1){
                     echo M3D_NET_HOME;
                 }
                 else{
-                    echo $libs_root ->meta_txt;
+                    echo $lib_root ->meta_txt;
                 }
             ?>',
-            object3d: <?=$config_libs['object3d']->meta_txt?>,
-            texture: '<?=$config_libs['texture']->meta_txt?>',
-            material: '<?=$config_libs['material']->meta_txt?>',
-            forceField: '<?=$config_libs['forceField']->meta_txt?>',
-            animation: '<?=$config_libs['animation']->meta_txt?>'
+            object3d: <?=$lib_obj3d?>,
+            texture: '<?=$lib_tex?>',
+            material: '<?=$lib_mat?>',
+            forceField: '<?=$lib_ff?>',
+            animation: '<?=$lib_anim?>'
         };
         MATERIAL3DEDITOR_CONFIG.editor = {
             files: {
                 "upload_url": "<?php
-                    $editor_upload = $config_files['upload_url'];
-                    if($editor_upload ->meta_value == 0){//local
+                    if($files_up ->meta_value == 0){//local
                         echo admin_url('admin-ajax.php').'?action=m3d_save_scene&wpnonce='.esc_attr(wp_create_nonce('m3d_save_scene'));
                     }
                     else{//other
-                        echo $editor_upload->meta_txt;
+                        echo $files_up->meta_txt;
                     }                   
                 ?>",
                 "download_url": "<?php
-                    $editor_download = $config_files['download_url'];
-                    if($editor_download ->meta_value == 0){//local
+                    if($files_down ->meta_value == 0){//local
                         echo admin_url('admin-ajax.php').'?action=m3d_load_scene';
                     }
-                    else if($editor_download ->meta_value == 1){//gallery
+                    else if($files_down ->meta_value == 1){//gallery
                         echo M3D_NET_HOME.'ajax.php?action=load';
                     }
                     else{//other
-                        echo $editor_download->meta_txt;
+                        echo $files_down->meta_txt;
                     }                   
                 ?>"
             }
@@ -103,6 +217,11 @@ if(current_user_can( 'edit_m3d_scene' )):
                 return;
             }
             Material3dEditor.saveScene(filename, 1);
+        }
+        function onSettings(btn){
+            btn.classList.toggle('hide');
+            var sform = document.getElementById('m3d-settings-form');
+            sform.classList.toggle('hide');
         }
     </script>
 </div>

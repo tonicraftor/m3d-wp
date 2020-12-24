@@ -1,0 +1,33 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 80 80">
+ <circle
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       cx="40"
+       cy="40"
+       r="4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 16,16 16,16"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 40,29 v -21"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 48,32 16,-16"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="M 51,40 H 72"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 48,48 16,16"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 40,51 v 21"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="m 32,48 -16,16"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;"
+       d="M 29,40 H 8"/>
+</svg>

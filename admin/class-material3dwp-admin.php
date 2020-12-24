@@ -43,7 +43,6 @@ class Material3dWP_Admin {
         );
         add_submenu_page( $slug, __('M3d Scenes', 'm3dwp'), __('M3d Scenes', 'm3dwp'), $cap, $slug, array($this, 'admin_menu_scenes') );
         add_submenu_page( $slug, __('M3d Editor','m3dwp'), __('M3d Editor','m3dwp'), 'edit_m3d_scene', 'admin-m3d-editor.php', array($this, 'admin_menu_editor') );
-        add_submenu_page( $slug, __('Settings','m3dwp'), __('Settings','m3dwp'), 'edit_m3d_scene', 'admin-m3d-settings.php', array($this, 'admin_menu_settings') );
         add_submenu_page( $slug, __('Help/Support','m3dwp'), __('Help/Support','m3dwp'), $cap, 'admin-m3d-help.php', array($this, 'admin_menu_help') );
     }
 
@@ -89,10 +88,9 @@ class Material3dWP_Admin {
             return $links;
         }
 
-        $settings_link = '<a href="'.menu_page_url('admin-m3d-settings.php', false).'">Settings</a>';
         $help_link = '<a href="'.menu_page_url('admin-m3d-help.php', false).'">Help</a>';
 
-        array_unshift( $links, $settings_link, $help_link );
+        array_unshift( $links, $help_link );
 
         return $links;
     }

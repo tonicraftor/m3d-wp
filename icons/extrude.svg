@@ -1,0 +1,22 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 80 80">
+  <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 20,16 -12,16 v 24 l 12,16 h 32 l 12,-16 v -24 l -12,-16 z"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 21,15 9,-7 h 30 l 12,16 v 24 l -12,16 -7,8"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 53,15 6,-6"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 65,31 6,-6"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 65,55 6,-6"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 9,32 h 54 l -54,24 h 54"/>
+</svg>

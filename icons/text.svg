@@ -1,0 +1,13 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 80 80">
+  <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 8,13 v 8 h 24 v 51 h 8 v -51 h 23.571 l 8.429,-5 v -7"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 64,20 v -8 l 8,-4 H 16 l -8,4 h 55"/>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;"
+       d="m 46,22 v 46 l -5,4"/>
+</svg>
