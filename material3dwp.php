@@ -27,7 +27,7 @@ define( 'M3DWP_VERSION', '1.0.0' );
 define('M3DWP_URL', plugin_dir_url( __FILE__ ));
 define('M3DWP_PATH', plugin_dir_path( __FILE__ ));
 define('M3DWP_PLUGIN_BASENAME', plugin_basename( __FILE__ ));
-define('M3D_NET_HOME', 'https://material3d.net/');
+define('M3D_NET_HOME', 'http://localhost/material3d/'/*'https://material3d.net/'*/);
 
 require_once(M3DWP_PATH.'classes/class-material3dwp.php');
 

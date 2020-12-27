@@ -2,7 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     const scenes = document.querySelectorAll('m3dscene');
-    ajaxObj.url;
     scenes.forEach(item => {
         const container = document.createElement('div');
         container.classList.add('m3d-scene');
@@ -53,6 +52,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if(item.hasAttribute('vrsupport')){
             options.VRSupport = item.getAttribute('vrsupport') === 'true';
         }
-        Material3dPlayer.play(container, ajaxObj.url + '?action=m3d_load_scene&filename=' + name, options);
+        const sceneObj = Material3dPlayer.play(container, ajaxObj.url + '?action=m3d_load_scene&filename=' + name, options);
+        if(item.hasAttribute('onplay')){
+            const func = item.getAttribute('onplay');
+            if(window[func]){
+                window[func](sceneObj);
+            }
+        }
     });
 });

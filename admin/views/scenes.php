@@ -6,8 +6,8 @@
         exit;
     }
 
-    $PGLIMIT = 2;
-    $TabNames = ['Scene List', 'Trashed', 'Gallery'];
+    $PGLIMIT = 20;
+    $TabNames = ['Scene List', 'Trashcan', 'Gallery'];
     $OrderFields = ['filename', 'author', 'updateTime'];
     
     $get_arr = filter_input_array(INPUT_GET);
@@ -93,7 +93,7 @@
         }
     }
 ?>
-<div class="wrap">
+<div class="m3d-admin-wrap">
     <h1 class="wp-heading-inline">Material3d Scenes</h1>
     <div class="m3d-page-info">
     <?php if($search): ?>
@@ -110,25 +110,25 @@
         <div class="btns">
             <?php if($can_edit):
             if($tabidx == 0): ?>
-            <a href="<?=$editor_url?>" class="action-btn">
-                <img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add">
+            <a href="<?=$editor_url?>" class="action-btn large">
+                <img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add" title="Add new">
             </a>
-            <a onclick="m3d_scenelist.trashAll()" class="action-btn">
-                <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash all">
+            <a onclick="m3d_scenelist.trashAll()" class="action-btn large">
+                <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash all" title="Trash all">
             </a>
             <?php elseif($tabidx == 1): ?>
-            <a onclick="m3d_scenelist.restoreAll()" class="action-btn">
-                <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore all">
+            <a onclick="m3d_scenelist.restoreAll()" class="action-btn large">
+                <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore all" title="Restore all">
             </a>
-            <a onclick="m3d_scenelist.delAll()" class="action-btn">
-                <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete all">
+            <a onclick="m3d_scenelist.delAll()" class="action-btn large">
+                <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete all" title="Delete all">
             </a>
             <?php endif;
             endif;
             ?>
             <input type="text" id="m3_search_input" value="<?=$search?>">
-            <a onclick="m3d_scenelist.search()" class="action-btn">
-                <img src="<?=M3DWP_URL.'imgs/search.svg'?>" alt="search">
+            <a onclick="m3d_scenelist.search()" class="action-btn large">
+                <img src="<?=M3DWP_URL.'imgs/search.svg'?>" alt="search" title="Search">
             </a>
         </div>
         <table class="scene-table wp-list-table widefat fixed striped table-view-list posts">
@@ -159,32 +159,32 @@
                         <?php if($tabidx == 0):
                         if($can_edit): ?>
                         <a onclick="m3d_scenelist.edit('<?=$val->filename?>')" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit">
+                            <img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit" title="Edit">
                         </a>
                         <a onclick="m3d_scenelist.trash('<?=$val->id?>')" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash">
+                            <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash" title="Trash">
                         </a>
                         <?php endif ?>
-                        <a onclick="m3d_scenelist.play('<?=$val->filename?>', true)" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play">
+                        <a href="#player-wrap" onclick="m3d_scenelist.play('<?=$val->filename?>', true)" class="action-btn">
+                            <img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play" title="Play">
                         </a>
                         <?php elseif($tabidx == 1):
                         if($can_edit): ?>
                         <a onclick="m3d_scenelist.restore('<?=$val->id?>')" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore">
+                            <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore" title="Restore">
                         </a>
                         <a onclick="m3d_scenelist.del('<?=$val->id?>')" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete">
+                            <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete" title="Delete forever">
                         </a>
                         <?php endif ?>
                         <?php else:
                         if($can_edit): ?>
                         <a onclick="m3d_scenelist.edit('<?=$val->filename?>', 'gallery')" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit">
+                            <img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit" title="Edit">
                         </a>
                         <?php endif ?>
                         <a onclick="m3d_scenelist.play('<?=$val->filename?>', false)" class="action-btn">
-                            <img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play">
+                            <img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play" title="Play">
                         </a>
                         <?php endif ?>
                     </td>
@@ -208,7 +208,63 @@
         </div>
         <?php endif ?>
     </div>
-    <div id="player"></div>
+    <div id="player-wrap">
+        <div class="shortcode"><span>Shortcode:</span><span id="m3d-play-sc"></span><span onclick="m3d_player.onCopySc()"><img src="<?=M3DWP_URL.'imgs/copy.svg'?>" alt="copy" title="Copy"></span></div>
+        <div class="options">
+            <div class="title">Options</div>
+            <div class="content">
+                <div>
+                    <input type="checkbox" id="opt-w" checked onchange="m3d_player.setOption('width', 0, this.checked)"><label for="opt-w">Width</label>
+                </div>
+                <div><input type="number" id="opt-w-v" value="600" onchange="m3d_player.setOption('width', 1, this.value)"></div>
+                <div>
+                    <input type="checkbox" id="opt-h" checked onchange="m3d_player.setOption('height', 0, this.checked)"><label for="opt-h">Height</label>
+                </div>
+                <div><input type="number" id="opt-h-v" value="300" onchange="m3d_player.setOption('height', 1, this.value)"></div>
+                <div>
+                    <div><input type="checkbox" id="opt-bg" onchange="m3d_player.setOption('background', 0, this.checked)"><label for="opt-bg">Background</label></div>
+                </div>
+                <div>
+                    <div>Color: <br><input type="text" id="opt-bg-c" value="0x000000" onchange="m3d_player.setOption('background', 1, this.value)"></div>
+                    <div>Texture: <br><input type="text" id="opt-bg-t" value="" onchange="m3d_player.setOption('background', 2, this.value)"></div>
+                </div>
+                <div>
+                    <input type="checkbox" id="opt-env" onchange="m3d_player.setOption('environment', 0, this.checked)"><label for="opt-env">Environment</label>
+                </div>
+                <div>
+                    <input type="text" id="opt-env-v" value="" onchange="m3d_player.setOption('environment', 1, this.value)">
+                </div>
+                <div>
+                    <input type="checkbox" id="opt-cam" onchange="m3d_player.setOption('camera', 0, this.checked)"><label for="opt-cam">Camera</label>
+                </div>
+                <div>
+                    <input type="text" id="opt-cam-v" value="" onchange="m3d_player.setOption('camera', 1, this.value)">
+                </div>
+                <div>
+                    <div><input type="checkbox" id="opt-fog" onchange="m3d_player.setOption('fog', 0, this.checked)"><label for="opt-fog">Fog</label></div>
+                </div>
+                <div>
+                    <div>Color: <br><input type="text" id="opt-fog-c" value="0x000000" onchange="m3d_player.setOption('fog', 1, this.value)"></div>
+                    <div>Near: <br><input type="number" id="opt-fog-n" value="1.0" onchange="m3d_player.setOption('fog', 2, this.value)"></div>
+                    <div>Far: <br><input type="number" id="opt-fog-f" value="1000.0" onchange="m3d_player.setOption('fog', 3, this.value)"></div>
+                </div>
+                <div>
+                    <input type="checkbox" id="opt-vr" onchange="m3d_player.setOption('vrsupport', 0, this.checked)"><label for="opt-vr">VRSupport:</label>
+                </div>
+                <div>
+                    <input type="radio" id="opt-vr-t" name="opt-vr" checked onclick="m3d_player.setOption('vrsupport', 1, true)"><label for="opt-vr-t">true</label>
+                    <input type="radio" id="opt-vr-f" name="opt-vr" onclick="m3d_player.setOption('vrsupport', 1, false)"><label for="opt-vr-f">false</label>
+                </div>
+            </div>
+            <div class="btns">
+                <button>Apply</button>
+                <button onclick="m3d_player.reset()">Reset</button>
+            </div>
+        </div>
+        <div class="main-part">
+            <div class="container"></div>
+        </div>
+    </div>
 </div>
 <script>
     var m3d_scenelist = {
@@ -266,9 +322,12 @@
             });
         },
         play: function(filename, bLocal){
-            const container = document.getElementById('player');
-            const url = bLocal ? '<?=admin_url('admin-ajax.php')?>?action=m3d_load_scene&filename=' : '<?=M3D_NET_HOME?>ajax.php?action=load&filename=';
-            Material3dPlayer.play(container, url + filename);
+            const wrap = document.getElementById('player-wrap');
+            wrap.classList.add('show');
+            m3d_player.filename = filename;
+            m3d_player.bLocal = bLocal;
+            m3d_player.reset();
+            m3d_player.play();
         },
         <?php if($can_edit): ?>
         edit: function(filename, where){
@@ -326,5 +385,93 @@
             window.location.href = '<?=$scenes_url?>&tab=<?=$tabidx?>&orderby=' + orderby + '&asc=' + (asc !== 'asc') + '&search=<?=$search?>';
         }
     };
-    m3d_scenelist.init();    
+    var m3d_player = {
+        filename: '',
+        bLocal: true,
+        reset: function(){
+            this.options = {
+                width: [true, 600],
+                height: [true, 300],
+                background: [false, '0x000000', ''],
+                environment: [false, ''],
+                camera: [false, ''],
+                fog: [false, '0x000000', '1.0', '1000.0'],
+                vrsupport: [false, true]
+            };
+            const wrap = document.getElementById('player-wrap');
+            const sc = wrap.querySelector('#m3d-play-sc');
+            if(sc){
+                sc.innerHTML =  '[m3dscene name="' + this.filename + '" width="600" height="300"]';
+            }
+            const content = wrap.querySelector('.content');
+            if(content){
+                if(this.content){
+                    content.innerHTML = this.content;
+                }
+                else {
+                    this.content = content.innerHTML;
+                }
+            }
+        },
+        setOption: function(key, index, value){
+            const options = this.options;
+            options[key][index] = value;
+            let str = '[m3dscene name="' + this.filename + '"';
+            if(options.width[0]){
+                str += ' width="' + options.width[1] + '"';
+            }
+            if(options.height[0]){
+                str += ' height="' + options.height[1] + '"';
+            }
+            if(options.background[0]){
+                if(options.background[2] !== ''){
+                    str += ' background="' + options.background[2] + '"';
+                }
+                else if(options.background[1] !== ''){
+                    str += ' background="' + options.background[1] + '"';
+                }
+                else {
+                    str += ' background=""';
+                }
+            }
+            if(options.environment[0]){
+                str += ' environment="' + options.environment[1] + '"';
+            }
+            if(options.camera[0]){
+                str += ' camera="' + options.camera[1] + '"';
+            }
+            if(options.fog[0]){
+                if(options.fog[1] === '' && options.fog[2] === '' && options.fog[3] === ''){
+                    str += ' fog=""';
+                }
+                else {
+                    str += ' fog="' + options.fog[1] + ',' + options.fog[2] + ',' + options.fog[3] + '"';
+                }
+            }
+            if(options.vrsupport[0]){
+                str += ' vrsupport="' + options.vrsupport[1] + '"';
+            }
+            const sc = document.getElementById('m3d-play-sc');
+            sc.innerHTML =  str + ']';
+        },
+        onCopySc: function(){
+            const sc = document.getElementById('m3d-play-sc');
+            navigator.clipboard.writeText(sc.innerHTML).then(function() {}, function() {alert('Text copy failed!');});
+        },
+        play: function(){
+            if(this.sceneObj){
+                this.sceneObj.animationController.stop();
+            }
+            const url = this.bLocal ? '<?=admin_url('admin-ajax.php')?>?action=m3d_load_scene&filename=' : '<?=M3D_NET_HOME?>ajax.php?action=load&filename=';
+            const opt = this.options;
+            const options = {};
+            if(opt.width){}
+            const container = document.querySelector('#player-wrap > .main-part > .container');
+            if(container){
+                this.sceneObj = Material3dPlayer.play(container, url + this.filename, options);
+            }
+        }
+    };
+    m3d_scenelist.init();
+    m3d_player.reset();
 </script>
