@@ -97,18 +97,18 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p>Material3d Editor is a single page app based on React.js and three.js, providing a visualized and WYSIWYG way to construct 3d scenes with objects, lights, cameras, textures, materials, animations, force fields and user interactions (mouse click, screen touch, and so on).</p>
             <p>See <a href="<?=M3D_NET_HOME?>forum.php?type=single&id=0">First Tutorial</a> to learn.</p>
             <p>See <a href="<?=M3D_NET_HOME?>document-user-0.html">Documentation</a> for detail.</p>
-            <p>Click <img src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"> to open settings panel.</p>
-            <p>The "Libraries" settings configure the libraries used by the editor.<br>
-                - The "Root URL" could be "Local", "Material3d.net" or "Other",
+            <p>Click <img width="25" height="25" src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"> to open <b>Settings Panel</b> at the top of the <a href="<?=menu_page_url('admin-m3d-editor.php', false)?>">Editor page</a>.</p>
+            <p>The <b>Libraries</b> settings configure the libraries used by the editor.<br>
+                &nbsp;- The "Root URL" could be "Local", "Material3d.net" or "Other",
                 which means the root url is set to the local website, the home site of Material3d.net, or other location respectively.<br>
-                - The "Object3d Libraries" is a string of json format, which is an object with a few properties.
-                Each property represents an object3d library provided to the editor, like "mesh": "libs/meshlib.js", which is a "mesh" library located at Root URL plus "libs/meshlib.js".
-                - Other settings provide texture, material, forcefield and animation libraries to the editor, which are located at Root URL plus the setting value (like "libs/texturelib.js").
+                &nbsp;- The "Object3d Libraries" is a string of json format, which is an object with a few properties.
+                Each property represents an object3d library provided to the editor, like "mesh": "libs/meshlib.js", which is a "mesh" library located at Root URL plus "libs/meshlib.js".<br>
+                &nbsp;- Other settings provide texture, material, forcefield and animation libraries to the editor, which are located at Root URL plus the setting value (like "libs/texturelib.js").
             </p>
-            <p>The "Files" settings configure the scene file upload and download url.<br>
-                - The "Upload URL" could be "Local", or "Other",
+            <p>The <b>Files</b> settings configure the scene file upload and download url.<br>
+                &nbsp;- The "Upload URL" could be "Local", or "Other",
                 which means the saving place of scene files is set to the local website, or other location.<br>
-                - The "Download URL" could be "Local", "Gallery", or "Other",
+                &nbsp;- The "Download URL" could be "Local", "Gallery", or "Other",
                 which means the loading source of scene files is set to the local website, the gallery of Material3d.net, or other location respectively.
             </p>
             <p>See <a href="<?=M3D_NET_HOME?>document-dev-1-1.html">"config.js"</a> for detail.</p>
@@ -119,9 +119,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="content">
             <p>Submit a question or send email to <a href="mailto:support@material3d.net">support@material3d.net</a> for support.</p>
             <form action="<?=M3D_NET_HOME?>forum.php?type=post" method="post" class="support-form">
+                <input type="hidden" name="source" value="<?=$_SERVER['SERVER_NAME']?>">
                 <input type="text" name="title" id="support-title" placeholder="Title">
                 <textarea name="content" id="support-content" cols="100" rows="10"></textarea>
-                <button type="submit">Submit</button>
+                <div><button type="submit" class="button-primary">Submit</button></div>
             </form>
             <p>Find <a href="<?=M3D_NET_HOME?>forum.php">Questions and Answers</a> on material3d.net forum.</p>
         </div>

@@ -225,8 +225,8 @@
                     <div><input type="checkbox" id="opt-bg" onchange="m3d_player.setOption('background', 0, this.checked)"><label for="opt-bg">Background</label></div>
                 </div>
                 <div>
-                    <div>Color: <br><input type="text" id="opt-bg-c" value="0x000000" onchange="m3d_player.setOption('background', 1, this.value)"></div>
-                    <div>Texture: <br><input type="text" id="opt-bg-t" value="" onchange="m3d_player.setOption('background', 2, this.value)"></div>
+                    <div><div>Color: <span class="color-bar"></span></div><input type="text" id="opt-bg-c" value="0x000000" onchange="m3d_player.setOption('background', 1, this.value);m3d_player.setColor(this);"></div>
+                    <div><div>Texture: </div><input type="text" id="opt-bg-t" value="" onchange="m3d_player.setOption('background', 2, this.value)"></div>
                 </div>
                 <div>
                     <input type="checkbox" id="opt-env" onchange="m3d_player.setOption('environment', 0, this.checked)"><label for="opt-env">Environment</label>
@@ -244,9 +244,9 @@
                     <div><input type="checkbox" id="opt-fog" onchange="m3d_player.setOption('fog', 0, this.checked)"><label for="opt-fog">Fog</label></div>
                 </div>
                 <div>
-                    <div>Color: <br><input type="text" id="opt-fog-c" value="0x000000" onchange="m3d_player.setOption('fog', 1, this.value)"></div>
-                    <div>Near: <br><input type="number" id="opt-fog-n" value="1.0" onchange="m3d_player.setOption('fog', 2, this.value)"></div>
-                    <div>Far: <br><input type="number" id="opt-fog-f" value="1000.0" onchange="m3d_player.setOption('fog', 3, this.value)"></div>
+                    <div><div>Color: <span class="color-bar"></span></div><input type="text" id="opt-fog-c" value="0x000000" onchange="m3d_player.setOption('fog', 1, this.value);m3d_player.setColor(this);"></div>
+                    <div><div>Near: </div><input type="number" id="opt-fog-n" value="1.0" onchange="m3d_player.setOption('fog', 2, this.value)"></div>
+                    <div><div>Far: </div><input type="number" id="opt-fog-f" value="1000.0" onchange="m3d_player.setOption('fog', 3, this.value)"></div>
                 </div>
                 <div>
                     <input type="checkbox" id="opt-vr" onchange="m3d_player.setOption('vrsupport', 0, this.checked)"><label for="opt-vr">VRSupport:</label>
@@ -257,8 +257,8 @@
                 </div>
             </div>
             <div class="btns">
-                <button>Apply</button>
-                <button onclick="m3d_player.reset()">Reset</button>
+                <button onclick="m3d_player.play()" class="button-primary">Apply</button>
+                <button onclick="m3d_player.reset();m3d_player.play()" class="button-primary">Reset</button>
             </div>
         </div>
         <div class="main-part">
@@ -344,8 +344,7 @@
             var url = '<?=admin_url('admin-ajax.php')?>?action='+ action + '&wpnonce=' + nonce + '&ids=' + ids;
             xhr.open('GET', url, true);
             xhr.onload = () => {
-                //window.location.reload();
-                console.log(xhr.response);
+                window.location.reload();
             };
             xhr.send();
         },
@@ -390,8 +389,8 @@
         bLocal: true,
         reset: function(){
             this.options = {
-                width: [true, 600],
-                height: [true, 300],
+                width: [true, '600'],
+                height: [true, '300'],
                 background: [false, '0x000000', ''],
                 environment: [false, ''],
                 camera: [false, ''],
@@ -454,6 +453,20 @@
             const sc = document.getElementById('m3d-play-sc');
             sc.innerHTML =  str + ']';
         },
+        setColor: function(ele){
+            let col = ele.value ? parseInt(ele.value) : 0xffffff;
+            if(isNaN(col) || col > 0xffffff) col = 0xffffff;
+            if(col < 0 ) col = 0;
+            const prev = ele.previousElementSibling;
+            if(prev){
+                const bar = prev.querySelector('.color-bar');
+                if(bar){
+                    col = col.toString(16);
+                    col = '#' + '0'.repeat(6 - col.length) + col;
+                    bar.style.backgroundColor = col;
+                }
+            }
+        },
         onCopySc: function(){
             const sc = document.getElementById('m3d-play-sc');
             navigator.clipboard.writeText(sc.innerHTML).then(function() {}, function() {alert('Text copy failed!');});
@@ -465,9 +478,60 @@
             const url = this.bLocal ? '<?=admin_url('admin-ajax.php')?>?action=m3d_load_scene&filename=' : '<?=M3D_NET_HOME?>ajax.php?action=load&filename=';
             const opt = this.options;
             const options = {};
-            if(opt.width){}
+            if(opt.width[0] || opt.height[0]){
+                const size = {
+                    width: opt.width[0] ? parseInt(opt.width[1]) : 200,
+                    height: opt.height[0] ? parseInt(opt.height[1]) : 100
+                };
+                if(!isNaN(size.width) && !isNaN(size.height)) options.size = size;
+            }
+            if(opt.background[0]){
+                let bg = opt.background[2];
+                if(bg === ''){
+                    bg = opt.background[1];
+                    if(bg !== ''){
+                        bg = parseInt(bg);
+                        if(isNaN(bg)) bg = 0;
+                    }
+                    else {
+                        bg = undefined;
+                    }
+                }
+                options.background = bg;
+            }
+            if(opt.environment[0]){
+                let env = opt.environment[1];
+                if(env === '') env = undefined;
+                options.environment = env;
+            }
+            if(opt.camera[0]){
+                let cam = opt.camera[1];
+                if(cam === '') cam = undefined;
+                options.camera = cam;
+            }
+            if(opt.fog[0]){
+                if(opt.fog[1] === '' && opt.fog[2] === '' && opt.fog[3] === ''){
+                    options.fog = undefined;
+                }
+                else {
+                    const fog = {
+                        color: parseInt(opt.fog[1]),
+                        near: parseFloat(opt.fog[2]),
+                        far: parseFloat(opt.fog[3])
+                    };
+                    if(isNaN(fog.color)) fog.color = 0;
+                    if(isNaN(fog.near)) fog.near = 1.0;
+                    if(isNaN(fog.far)) fog.far = 1000.0;
+                    options.fog = fog;
+                }
+                
+            }
+            if(opt.vrsupport[0]){
+                options.VRSupport = opt.vrsupport[1];
+            }
             const container = document.querySelector('#player-wrap > .main-part > .container');
             if(container){
+                container.innerHTML = '';
                 this.sceneObj = Material3dPlayer.play(container, url + this.filename, options);
             }
         }

@@ -285,11 +285,6 @@
                 }
             }
         }
-
-        .button-primary {
-            padding: 0 30px;
-            font-size: 1.2em;
-        }
     }
     & > .editor-wrap {
         width: 1220px;
@@ -360,6 +355,14 @@
                 display: grid;
                 grid-template-columns: auto 1fr;
                 gap: 5px;
+
+                .color-bar {
+                    display: inline-block;
+                    width: 40px;
+                    height: 12px;
+                    border: 1px solid #000;
+                    background-color: #fff;
+                }
             }
 
             & > .btns {
@@ -370,11 +373,56 @@
 
         & > .main-part {
             overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             & > .container {
-                overflow: auto;
+                width: max-content;
             }
         }
+    }
+
+    & > .section {
+        font-size: 16px;
+        padding: 10px 0;
+
+        & > .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        & > .content {
+            p {
+                font-size: 16px;
+            }
+
+            & > .help-list {
+                border: 1px solid #212121;
+                border-collapse: collapse;
+                th, td {
+                    border: 1px solid #212121;
+                    padding: 5px 5px;
+                }
+            }
+
+            & > .support-form {
+                max-width: 800px;
+                display: grid;
+                row-gap: 10px;
+                justify-content: stretch;
+
+                & > * {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .button-primary {
+        padding: 0 25px;
+        font-size: 16px;
     }
 }
 
