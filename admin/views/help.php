@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="title">Material3d Editor</div>
         <div class="content">
             <p>Material3d Editor is a single page app based on React.js and three.js, providing a visualized and WYSIWYG way to construct 3d scenes with objects, lights, cameras, textures, materials, animations, force fields and user interactions (mouse click, screen touch, and so on).</p>
-            <p>See <a href="<?=M3D_NET_HOME?>forum.php?type=single&id=0">First Tutorial</a> to learn.</p>
+            <p>See <a href="<?=M3D_NET_HOME?>forum.php?type=single&id=1">First Tutorial</a> to learn.</p>
             <p>See <a href="<?=M3D_NET_HOME?>document-user-0.html">Documentation</a> for detail.</p>
             <p>Click <img width="25" height="25" src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"> to open <b>Settings Panel</b> at the top of the <a href="<?=menu_page_url('admin-m3d-editor.php', false)?>">Editor page</a>.</p>
             <p>The <b>Libraries</b> settings configure the libraries used by the editor.<br>
@@ -120,8 +120,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p>Submit a question or send email to <a href="mailto:support@material3d.net">support@material3d.net</a> for support.</p>
             <form action="<?=M3D_NET_HOME?>forum.php?type=post" method="post" class="support-form">
                 <input type="hidden" name="source" value="<?=$_SERVER['SERVER_NAME']?>">
-                <input type="text" name="title" id="support-title" placeholder="Title">
-                <textarea name="content" id="support-content" cols="100" rows="10"></textarea>
+                <input type="text" name="title" placeholder="Title">
+                <textarea name="content" cols="100" rows="10"></textarea>
                 <div><button type="submit" class="button-primary">Submit</button></div>
             </form>
             <p>Find <a href="<?=M3D_NET_HOME?>forum.php">Questions and Answers</a> on material3d.net forum.</p>
