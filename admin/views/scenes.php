@@ -126,7 +126,7 @@
             <?php endif;
             endif;
             ?>
-            <input type="text" id="m3_search_input" value="<?=$search?>">
+            <input type="text" id="m3d_search_input" value="<?=$search?>">
             <a onclick="m3d_scenelist.search()" class="action-btn large">
                 <img src="<?=M3DWP_URL.'imgs/search.svg'?>" alt="search" title="Search">
             </a>
@@ -313,7 +313,7 @@
                     }
                 });
             }
-            const searchinput = document.getElementById('m3_search_input');
+            const searchinput = document.getElementById('m3d_search_input');
             searchinput.addEventListener("keyup", (event) => {
                 if (event.key === "Enter") {
                     event.preventDefault();
@@ -371,7 +371,7 @@
         <?php endif ?>
         <?php endif ?>
         search: function(){
-            const searchinput = document.getElementById('m3_search_input');
+            const searchinput = document.getElementById('m3d_search_input');
             window.location.href = '<?=$scenes_url?>&tab=<?=$tabidx?>&search=' + encodeURIComponent(searchinput.value);
         },
         goTab: function(index){
