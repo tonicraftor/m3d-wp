@@ -131,7 +131,7 @@
                 <img src="<?=M3DWP_URL.'imgs/search.svg'?>" alt="search" title="Search">
             </a>
         </div>
-        <table class="scene-table wp-list-table widefat fixed striped table-view-list posts">
+        <table class="scene-table wp-list-table widefat striped table-view-list posts">
             <thead>
                 <tr>
                     <th><?=$orderhead[0]?></th>
@@ -196,10 +196,17 @@
                 </tr>
             <?php endfor ?>
             </tbody>
+            <tfoot>
+                <tr><td colspan="5" style="font-size: 20px;">
+                    <span><?=$totalcount?> items.</span>
+                    <?php if($tabidx == 0 && $totalcount === 0 && $can_edit):?>
+                    <span>Press <a href="<?=$editor_url?>" class="action-btn"><img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add" title="Add new"></a>button to add a new scene.</span>
+                    <?php endif;?>
+                </td></tr>
+            </tfoot>
         </table>
         <?php if($pgcount): ?>
         <div class="pagination">
-            <div><?=$totalcount?> items</div>
             <button <?=$pgidx >= 5 ? 'onclick="m3d_scenelist.goPage('.($pgidx - 5).')"' : 'disabled'?>>«</button>
             <button <?=$pgidx > 0 ? 'onclick="m3d_scenelist.goPage('.($pgidx - 1).')"' : 'disabled'?>>&lt;</button>
             <input type="number" id="m3_page_index" value="<?=$pgidx + 1?>"> of <?=$pgcount?>
