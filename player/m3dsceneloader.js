@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if(item.hasAttribute('vrsupport')){
             options.VRSupport = item.getAttribute('vrsupport') === 'true';
         }
-        const sceneObj = Material3dPlayer.play(container, ajaxObj.url + '?action=m3d_load_scene&filename=' + name, options);
+        const sceneObj = Material3dPlayer.play(container, M3DWP_HOST.ajax + '?action=m3d_load_scene&filename=' + name, options);
         if(item.hasAttribute('onplay')){
             const func = item.getAttribute('onplay');
             if(window[func]){

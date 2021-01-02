@@ -114,14 +114,14 @@
                 <img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add" title="Add new">
             </a>
             <a onclick="m3d_scenelist.trashAll()" class="action-btn large">
-                <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash all" title="Trash all">
+                <img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash all" title="Trash all selected">
             </a>
             <?php elseif($tabidx == 1): ?>
             <a onclick="m3d_scenelist.restoreAll()" class="action-btn large">
-                <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore all" title="Restore all">
+                <img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore all" title="Restore all selected">
             </a>
             <a onclick="m3d_scenelist.delAll()" class="action-btn large">
-                <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete all" title="Delete all">
+                <img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete all" title="Delete all selected">
             </a>
             <?php endif;
             endif;
