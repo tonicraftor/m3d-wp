@@ -575,7 +575,7 @@
           box-shadow: unset;
 }
 
-.m3-app input.MuiInputBase-input {
+.m3-app .MuiInputBase-input {
   padding: 6px 0 7px;
 }
 
@@ -602,6 +602,10 @@
 .m3-app select:focus {
   -webkit-box-shadow: unset;
           box-shadow: unset;
+}
+
+.m3-app .m3-fieldgroup .MuiSelect-root {
+  padding: 2px 0;
 }
 
 .m3-app .m3-dragbar > .title {

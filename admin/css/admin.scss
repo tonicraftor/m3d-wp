@@ -462,7 +462,7 @@
             box-shadow: unset;
         }
     }
-    input.MuiInputBase-input {
+    .MuiInputBase-input {
         padding: 6px 0 7px;
     }
     .m3-fieldgroup {
@@ -487,6 +487,9 @@
         &:focus {
             box-shadow: unset;
         }
+    }
+    .m3-fieldgroup .MuiSelect-root {
+        padding: 2px 0;
     }
     .m3-dragbar{
         & > .title {
