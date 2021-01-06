@@ -20,12 +20,15 @@
   border-radius: 50%;
   -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
           box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
   -webkit-transition: background-color 500ms;
   transition: background-color 500ms;
 }
 
-.m3d-scenelist .action-btn:hover {
+.m3d-scenelist .action-btn:not(.static) {
+  cursor: pointer;
+}
+
+.m3d-scenelist .action-btn:not(.static):hover {
   background-color: #64FFDA;
 }
 

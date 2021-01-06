@@ -63,7 +63,7 @@ class Material3dWP {
         "CREATE TABLE $meta_table_name (
             id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
             meta_key VARCHAR(255) NOT NULL,
-            meta_txt VARCHAR(65535) DEFAULT '' NOT NULL,
+            meta_txt VARCHAR(65535) NOT NULL,
             meta_value INTEGER DEFAULT 0 NOT NULL,
             PRIMARY KEY  (id)
         ) $charset_collate;"

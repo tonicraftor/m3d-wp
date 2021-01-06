@@ -199,8 +199,26 @@
             <tfoot>
                 <tr><td colspan="5" style="font-size: 20px;">
                     <span><?=$totalcount?> items.</span>
-                    <?php if($tabidx == 0 && $totalcount === 0 && $can_edit):?>
-                    <span>Press <a href="<?=$editor_url?>" class="action-btn"><img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add" title="Add new"></a>button to add a new scene.</span>
+                    <?php if($tabidx == 0):?>
+                        <?php if($can_edit):?>
+                            <?php if($totalcount === 0):?>
+                                <span>Press <div class="action-btn static"><img src="<?=M3DWP_URL.'imgs/add.svg'?>" alt="add"></div>button to add a new scene.</span>
+                            <?php else:?>
+                                <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit"></span><span>Edit </span>
+                                <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash"></span><span>Trash </span>
+                            <?php endif;?>
+                            <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play"></span><span>Play </span>
+                        <?php endif;?>
+                    <?php elseif($tabidx == 1):?>
+                        <?php if($can_edit):?>
+                        <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/restore.svg'?>" alt="restore"></span><span>Restore </span>
+                        <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/delete.svg'?>" alt="delete"></span><span>Delete forever </span>
+                        <?php endif;?>
+                    <?php else:?>
+                        <?php if($can_edit):?>
+                        <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit"></span><span>Edit </span>
+                        <?php endif;?>
+                        <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play"></span><span>Play </span>
                     <?php endif;?>
                 </td></tr>
             </tfoot>
