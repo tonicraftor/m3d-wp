@@ -58,16 +58,14 @@ class Material3dWP {
             createTime DATETIME DEFAULT '2020-12-01 00:00:00' NOT NULL,
             updateTime DATETIME DEFAULT '2020-12-01 00:00:00' NOT NULL,
             status TINYINT DEFAULT 1 NOT NULL,
-            PRIMARY KEY (id),
-            UNIQUE KEY (filename)
+            PRIMARY KEY  (id)
         ) $charset_collate;",
         "CREATE TABLE $meta_table_name (
             id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
             meta_key VARCHAR(255) NOT NULL,
             meta_txt VARCHAR(65535) DEFAULT '' NOT NULL,
             meta_value INTEGER DEFAULT 0 NOT NULL,
-            PRIMARY KEY (id),
-            UNIQUE KEY (meta_key)
+            PRIMARY KEY  (id)
         ) $charset_collate;"
         ];
     
