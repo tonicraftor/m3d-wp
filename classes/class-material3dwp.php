@@ -176,7 +176,6 @@ class Material3dWP {
         add_action( 'wp_ajax_m3d_del_scene', array($plugin_admin, 'del_scene' ));
         add_action( 'wp_ajax_m3d_restore_scene', array($plugin_admin, 'restore_scene' ));
         add_filter( 'plugin_action_links', array($plugin_admin, 'plugin_action_links' ), 10, 2 );
-
     }
 
     public static function get_meta($metakey){

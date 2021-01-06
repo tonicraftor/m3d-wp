@@ -33,6 +33,9 @@ require_once(M3DWP_PATH.'classes/class-material3dwp.php');
 
 function init_material3d(){
     $m3dwp = new Material3dWP();
+    //activate hook
+    register_activation_hook( __FILE__, array($m3dwp, 'activate_hook' ) );
+    register_uninstall_hook( __FILE__, array($m3dwp, 'uninstall_hook' ) );
 }
 
 init_material3d();
