@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <td>The background of the scene. It could be a integer which represents a color,
                             or a string which is the name of a texture defined in the scene.
                             For example: [... background="0xff0000"] - the background will be set to red color.
-                            If it's set to an empty string, the background will removed.
+                            If it's set to an empty string, the background will be removed.
                             (See <a href="<?=M3D_NET_HOME?>document-dev-2-0.html">this</a> for detail)
                         </td>
                     </tr>
@@ -64,8 +64,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tr>
                         <td>fog</td>
                         <td>string</td>
-                        <td>The fog of the scene. It is a string of three parameters separated with ",", which are color, near and far range.
-                            For example: [... fog="0x00ff00, 1.0, 30.0"] - the fog color is red, within the range between 1.0 and 30.0.
+                        <td>The fog of the scene. It is a string of three parameters separated with ",", which are color, near and far ranges.
+                            For example: [... fog="0xff0000, 1.0, 30.0"] - the fog color is red, within the range between 1.0 and 30.0.
                             If it's set to an empty string, the fog will be removed.
                             (See <a href="<?=M3D_NET_HOME?>document-dev-2-0.html">this</a> for detail)
                         </td>
@@ -83,7 +83,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <td>string</td>
                         <td>A function name defined in javascripts.
                             It takes only one argument which is a scene object returned by Material3dPlayer.play for users to do initialization work.
-                            For example: [... onPlay="init"] - a function named "init" will be run with an augument of the scene object when it is just created.
+                            For example: [... onPlay="init"] - a function named "init" will be called with an argument of the scene object when it is just created.
                             (See <a href="<?=M3D_NET_HOME?>document-dev-2-0.html">this</a> for detail)
                         </td>
                     </tr>
@@ -102,14 +102,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                 &nbsp;- The "Root URL" could be "Local", "Material3d.net" or "Other",
                 which means the root url is set to the local website, the home site of Material3d.net, or other location respectively.<br>
                 &nbsp;- The "Object3d Libraries" is a string of json format, which is an object with a few properties.
-                Each property represents an object3d library provided to the editor, like "mesh": "libs/meshlib.js", which is a "mesh" library located at Root URL plus "libs/meshlib.js".<br>
-                &nbsp;- Other settings provide texture, material, forcefield and animation libraries to the editor, which are located at Root URL plus the setting value (like "libs/texturelib.js").
+                Each property represents an object3d library imported by the editor, like "mesh": "libs/meshlib.js", which is a "mesh" library located at Root URL plus "libs/meshlib.js".<br>
+                &nbsp;- Other settings define texture, material, forcefield and animation libraries imported by the editor, which are located at Root URL plus the setting value (like "libs/texturelib.js").
             </p>
             <p>The <b>Files</b> settings configure the scene file upload and download url.<br>
                 &nbsp;- The "Upload URL" could be "Local", or "Other",
-                which means the saving place of scene files is set to the local website, or other location.<br>
+                which means the storage place of scene files is set to the local website, or other location.<br>
                 &nbsp;- The "Download URL" could be "Local", "Gallery", or "Other",
-                which means the loading source of scene files is set to the local website, the gallery of Material3d.net, or other location respectively.
+                which means the loading source of scene files is the local website, the gallery on Material3d.net, or other location respectively.
             </p>
             <p>See <a href="<?=M3D_NET_HOME?>document-dev-1-1.html">"config.js"</a> for detail.</p>
         </div>

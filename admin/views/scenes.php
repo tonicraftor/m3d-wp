@@ -101,7 +101,7 @@
     <?php endif ?>
     </div>
     
-    <div class="m3d-scenelist">
+    <div class="m3d-scenelist <?=$tabidx == 1 ? 'trashcan' : ($tabidx == 2 ? 'gallery' : '')?>">
         <div class="tabs">
             <?php for($i = 0; $i < 3; $i++): ?>
             <button onclick="m3d_scenelist.goTab(<?=$i?>)"<?=$tabidx == $i ? ' class="active"' : ''?>><?=$TabNames[$i]?></button>
@@ -207,6 +207,8 @@
                                 <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/edit.svg'?>" alt="edit"></span><span>Edit </span>
                                 <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/trash.svg'?>" alt="trash"></span><span>Trash </span>
                             <?php endif;?>
+                        <?php endif;?>
+                        <?php if($totalcount !== 0):?>
                             <span class="action-btn static"><img src="<?=M3DWP_URL.'imgs/play.svg'?>" alt="play"></span><span>Play </span>
                         <?php endif;?>
                     <?php elseif($tabidx == 1):?>

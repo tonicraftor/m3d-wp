@@ -117,6 +117,11 @@
   }
 }
 
+.m3d-scenelist.gallery > .btns {
+  -ms-grid-columns: minmax(100px, 1fr) auto;
+      grid-template-columns: minmax(100px, 1fr) auto;
+}
+
 .m3d-scenelist > .scene-table .title {
   font-size: 1.2rem;
   line-height: 1;
