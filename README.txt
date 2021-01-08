@@ -51,3 +51,7 @@ See https://material3d.net/documentation.html for detail.
 = 1.0.0 =
 * First public release.
 
+== Upgrade Notice ==
+
+= 1.0.0 =
+* First public release.
