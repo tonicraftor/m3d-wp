@@ -20,8 +20,8 @@
     $orderfield = $OrderFields[$orderby];
     $asc = ($get_arr['asc'] ?? '') !== 'false';
 
-    $editor_url = menu_page_url('admin-m3d-editor.php', false);
-    $scenes_url = menu_page_url('admin-m3d-scenes.php', false);
+    $editor_url = menu_page_url('m3d-editor.php', false);
+    $scenes_url = menu_page_url('m3d-scenes.php', false);
     $tab_url = "$scenes_url&tab=$tabidx";
 
     $orderhead = ['Name', 'Author', 'Date'];
@@ -153,7 +153,7 @@
                     <th><?=$orderhead[0]?></th>
                     <th>Action</th>
                     <?php if($tabidx == 0): ?>
-                    <th>Shortcode <a class="m3d-help-btn" href="<?=menu_page_url('admin-m3d-help.php', false)?>">?</a></th>
+                    <th>Shortcode <a class="m3d-help-btn" href="<?=menu_page_url('m3d-help.php', false)?>">?</a></th>
                     <?php endif ?>
                     <th><?=$orderhead[1]?></th>
                     <th><?=$orderhead[2]?></th>

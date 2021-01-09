@@ -21,51 +21,47 @@ if(current_user_can( 'edit_m3d_scene' )):
             <form action="<?=$_SERVER['REQUEST_URI']?>" method="post">
                 <?php wp_nonce_field( 'm3d_settings_form'); ?>
                 <div class="top-bar">
-                    <div>Settings <a class="m3d-help-btn" href="<?=menu_page_url('admin-m3d-help.php', false)?>">?</a></div>
+                    <div>Settings <a class="m3d-help-btn" href="<?=menu_page_url('m3d-help.php', false)?>">?</a></div>
                     <div onclick="toggleSettings()">✕</div>
                 </div>
                 <div class="section">
                     <div class="title">Libraries</div>
                     <div class="fields">
                         <div>Root URL:</div>
-                        <?php
-                            $checked = ['', '', ''];
-                            $checked[$config->lib_root->meta_value] = ' checked';
-                        ?>
                         <div>
                             <div>
-                                <input type="radio" id="lib-root-0" name="lib-root" value="0"<?=$checked[0]?>>
+                                <input type="radio" id="lib-root-0" name="lib-root" value="0">
                                 <label for="lib-root-0">Local</label>
                             </div>
                             <div>
-                                <input type="radio" id="lib-root-1" name="lib-root" value="1"<?=$checked[1]?>>
+                                <input type="radio" id="lib-root-1" name="lib-root" value="1">
                                 <label for="lib-root-1">Material3d.net</label>
                             </div>
                             <div class="line-input">
-                                <input type="radio" id="lib-root-2" name="lib-root" value="2"<?=$checked[2]?>>
+                                <input type="radio" id="lib-root-2" name="lib-root" value="2">
                                 <label for="lib-root-2">Other: </label>
-                                <input type="text" name="lib-root-txt" value="<?=$config->lib_root->meta_txt?>">
+                                <input type="text" id="lib-root-txt" name="lib-root-txt">
                             </div>
                         </div>
                         <div>Object3d Libraries:</div>
                         <div>
-                            <textarea name="lib-obj3d" cols="30" rows="10"><?=$config->lib_obj3d?></textarea>
+                            <textarea name="lib-obj3d" id="lib-obj3d" cols="30" rows="10"></textarea>
                         </div>
                         <div>Texture Library:</div>
                         <div>
-                            <input type="text" name="lib-tex" value="<?=$config->lib_tex?>">
+                            <input type="text" id="lib-tex" name="lib-tex">
                         </div>
                         <div>Material Library:</div>
                         <div>
-                            <input type="text" name="lib-mat" value="<?=$config->lib_mat?>">
+                            <input type="text" id="lib-mat" name="lib-mat">
                         </div>
                         <div>Forcefield Library:</div>
                         <div>
-                            <input type="text" name="lib-ff" value="<?=$config->lib_ff?>">
+                            <input type="text" id="lib-ff" name="lib-ff">
                         </div>
                         <div>Animation Library:</div>
                         <div>
-                            <input type="text" name="lib-anim" value="<?=$config->lib_anim?>">
+                            <input type="text" id="lib-anim" name="lib-anim">
                         </div>
                     </div>
                 </div>
@@ -73,39 +69,31 @@ if(current_user_can( 'edit_m3d_scene' )):
                     <div class="title">Scene Files</div>
                     <div class="fields">
                         <div>Upload URL:</div>
-                        <?php
-                            $checked = ['', ''];
-                            $checked[$config->files_up->meta_value] = ' checked';
-                        ?>
                         <div>
                             <div>
-                                <input type="radio" id="files-up-0" name="files-up" value="0"<?=$checked[0]?>>
+                                <input type="radio" id="files-up-0" name="files-up" value="0">
                                 <label for="files-up-0">Local</label>
                             </div>
                             <div class="line-input">
-                                <input type="radio" id="files-up-1" name="files-up" value="1"<?=$checked[1]?>>
+                                <input type="radio" id="files-up-1" name="files-up" value="1">
                                 <label for="files-up-1">Other: </label>
-                                <input type="text" name="files-up-txt" value="<?=$config->files_up->meta_txt?>">
+                                <input type="text" id="files-up-txt" name="files-up-txt">
                             </div>
                         </div>
                         <div>Download URL:</div>
-                        <?php
-                            $checked = ['', '', ''];
-                            $checked[$config->files_down->meta_value] = ' checked';
-                        ?>
                         <div>
                             <div>
-                                <input type="radio" id="files-down-0" name="files-down" value="0"<?=$checked[0]?>>
+                                <input type="radio" id="files-down-0" name="files-down" value="0">
                                 <label for="files-down-0">Local</label>
                             </div>
                             <div>
-                                <input type="radio" id="files-down-1" name="files-down" value="1"<?=$checked[1]?>>
+                                <input type="radio" id="files-down-1" name="files-down" value="1">
                                 <label for="files-down-1">Gallery</label>
                             </div>
                             <div class="line-input">
-                                <input type="radio" id="files-down-2" name="files-down" value="2"<?=$checked[2]?>>
+                                <input type="radio" id="files-down-2" name="files-down" value="2">
                                 <label for="files-down-2">Other: </label>
-                                <input type="text" name="files-down-txt" value="<?=$config->files_down->meta_txt?>">
+                                <input type="text" id="files-down-txt" name="files-down-txt">
                             </div>
                         </div>
                     </div>

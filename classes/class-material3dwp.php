@@ -124,11 +124,12 @@ class Material3dWP {
         wp_register_script( self::$script_h_three, M3DWP_URL.'three/build/three.min.js', array(), self::$version );
         wp_register_script( self::$script_h_player, M3DWP_URL.'player/material3dplayer.min.js', array(self::$script_h_three), self::$version);
         wp_register_script( self::$script_h_loader, M3DWP_URL.'player/m3dsceneloader.js', array(self::$script_h_player), self::$version);
-        wp_localize_script( self::$script_h_player, 'M3DHOST', array(
-            'ajax' => admin_url('admin-ajax.php'),
-            'server' => $_SERVER['SERVER_NAME'],
-            'm3dnet' => M3D_NET_HOME
-        ) );
+        wp_add_inline_script( self::$script_h_player, "var M3DHOST = {
+            ajax: '".admin_url('admin-ajax.php')."',
+            server: '{$_SERVER['SERVER_NAME']}',
+            m3dnet: '".M3D_NET_HOME."',
+            plugin: '".M3DWP_URL."'
+        }" );
         wp_register_style( self::$style_h_player, M3DWP_URL.'player/style.css', array(), self::$version );
     }
 

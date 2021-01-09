@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p>Material3d Editor is a single page app based on React.js and three.js, providing a visualized and WYSIWYG way to construct 3d scenes with objects, lights, cameras, textures, materials, animations, force fields and user interactions (mouse click, screen touch, and so on).</p>
             <p>See <a href="<?=M3D_NET_HOME?>forum.php?type=single&id=1">First Tutorial</a> to learn.</p>
             <p>See <a href="<?=M3D_NET_HOME?>document-user-0.html">Documentation</a> for detail.</p>
-            <p>Click <img width="25" height="25" src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"> to open <b>Settings Panel</b> at the top of the <a href="<?=menu_page_url('admin-m3d-editor.php', false)?>">Editor page</a>.</p>
+            <p>Click <img width="25" height="25" src="<?=M3DWP_URL.'imgs/settings.svg'?>" alt="settings"> to open <b>Settings Panel</b> at the top of the <a href="<?=menu_page_url('m3d-editor.php', false)?>">Editor page</a>.</p>
             <p>The <b>Libraries</b> settings configure the libraries used by the editor.<br>
                 &nbsp;- The "Root URL" could be "Local", "Material3d.net" or "Other",
                 which means the root url is set to the local website, the home site of Material3d.net, or other location respectively.<br>
