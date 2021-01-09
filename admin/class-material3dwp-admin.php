@@ -12,13 +12,9 @@
  */
 
 class Material3dWP_Admin {
-    /**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
+
+
+    public $config;
 	public function __construct() {
 
     }
@@ -67,9 +63,15 @@ class Material3dWP_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles($hook) {
         wp_enqueue_style( Material3dWP::$style_h_player );
-        wp_enqueue_style( Material3dWP::$plugin_name.'-editor', plugin_dir_url( __FILE__ ) . 'css/editor.css', array(), Material3dWP::$version);
+        if($hook === 'm3d-scenes_page_admin-m3d-editor'){
+            wp_enqueue_style( Material3dWP::$plugin_name.'-editor', plugin_dir_url( __FILE__ ) . 'css/editor.css', array(), Material3dWP::$version);
+            wp_enqueue_style( Material3dWP::$plugin_name.'-editor-ad', plugin_dir_url( __FILE__ ) . 'css/editor-ad.css', array(), Material3dWP::$version);
+        }
+        elseif($hook === 'toplevel_page_admin-m3d-scenes'){
+            wp_enqueue_style( Material3dWP::$plugin_name.'-scenes', plugin_dir_url( __FILE__ ) . 'css/scenes.css', array(), Material3dWP::$version);
+        }
         wp_enqueue_style( Material3dWP::$plugin_name.'-admin', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), Material3dWP::$version);
 	}
 
@@ -78,8 +80,132 @@ class Material3dWP_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
-        wp_enqueue_script( Material3dWP::$script_h_loader);
+	public function enqueue_scripts($hook) {
+        if($hook === 'toplevel_page_admin-m3d-scenes'){
+            wp_enqueue_script( Material3dWP::$script_h_player);
+            wp_enqueue_script( Material3dWP::$plugin_name.'-scenes', plugin_dir_url( __FILE__ ) . 'views/js/scenes.js', array(), Material3dWP::$version, true);
+            wp_add_inline_script( Material3dWP::$plugin_name.'-scenes', ' m3d_scenelist.init();m3d_player.reset();' );
+        }
+        else if($hook === 'm3d-scenes_page_admin-m3d-editor'){
+            wp_enqueue_script( Material3dWP::$script_h_player);
+            wp_enqueue_script( Material3dWP::$plugin_name.'-config', plugin_dir_url( __FILE__ ) . 'views/js/config.js', array(), Material3dWP::$version, true);
+            wp_enqueue_script( Material3dWP::$plugin_name.'-editor', plugin_dir_url( __FILE__ ) . 'views/js/material3deditor.js', array(), Material3dWP::$version, true);
+            wp_add_inline_script( Material3dWP::$plugin_name.'-editor', $this->inline_script_editor() );
+        }
+    }
+
+    private function inline_script_editor(){
+        $post_arr = filter_input_array(INPUT_POST);
+        if($post_arr && isset($post_arr['_wpnonce']) && wp_verify_nonce($post_arr['_wpnonce'], 'm3d_settings_form')){
+            if(isset($post_arr['lib-root'])){
+                Material3dWP::update_meta('config_lib_root', $post_arr['lib-root'], $post_arr['lib-root-txt'] ?? '');
+            }
+            if(isset($post_arr['lib-obj3d'])){
+                Material3dWP::update_meta('config_lib_object3d', 0, $post_arr['lib-obj3d']);
+            }
+            if(isset($post_arr['lib-tex'])){
+                Material3dWP::update_meta('config_lib_texture', 0, $post_arr['lib-tex']);
+            }
+            if(isset($post_arr['lib-mat'])){
+                Material3dWP::update_meta('config_lib_material', 0, $post_arr['lib-mat']);
+            }
+            if(isset($post_arr['lib-ff'])){
+                Material3dWP::update_meta('config_lib_forceField', 0, $post_arr['lib-ff']);
+            }
+            if(isset($post_arr['lib-anim'])){
+                Material3dWP::update_meta('config_lib_animation', 0, $post_arr['lib-anim']);
+            }
+            if(isset($post_arr['files-up'])){
+                Material3dWP::update_meta('config_files_upload', $post_arr['files-up'], $post_arr['files-up-txt'] ?? '');
+            }
+            if(isset($post_arr['files-down'])){
+                Material3dWP::update_meta('config_files_download', $post_arr['files-down'], $post_arr['files-down-txt'] ?? '');
+            }
+        }
+        $config = $this->config = (object)[
+            'lib_root' => Material3dWP::get_meta('config_lib_root'),
+            'lib_obj3d' => Material3dWP::get_meta('config_lib_object3d') ->meta_txt,
+            'lib_tex' => Material3dWP::get_meta('config_lib_texture') ->meta_txt,
+            'lib_mat' => Material3dWP::get_meta('config_lib_material') ->meta_txt,
+            'lib_ff' => Material3dWP::get_meta('config_lib_forceField') ->meta_txt,
+            'lib_anim' => Material3dWP::get_meta('config_lib_animation') ->meta_txt,
+            'files_up' => Material3dWP::get_meta('config_files_upload'),
+            'files_down' => Material3dWP::get_meta('config_files_download')
+        ];
+        if( $config->lib_root->meta_value == 0){
+            $lib_root = M3DWP_URL;
+        }
+        else if($config->lib_root->meta_value == 1){
+            $lib_root = M3D_NET_HOME;
+        }
+        else{
+            $lib_root = $config->lib_root->meta_txt;
+        }
+
+        $files_up = $config->files_up->meta_value == 0 ?
+        admin_url('admin-ajax.php').'?action=m3d_save_scene&wpnonce='.esc_attr(wp_create_nonce('m3d_save_scene'))
+        : $config->files_up->meta_txt;
+
+        if($config->files_down->meta_value == 0){//local
+            $files_down = admin_url('admin-ajax.php').'?action=m3d_load_scene';
+        }
+        else if($config->files_down->meta_value == 1){//gallery
+            $files_down = M3D_NET_HOME.'ajax.php?action=load';
+        }
+        else{//other
+            $files_down = $config->files_down->meta_txt;
+        }
+
+        $filename = filter_input(INPUT_GET, 'filename');
+        $where = filter_input(INPUT_GET, 'where');
+        if(!$filename && $filename !== '0') $filename = '';
+        if(!$where) $where = '';
+        
+        $script = <<<EOD
+        MATERIAL3DEDITOR_CONFIG.libraries = {
+            root: '$lib_root',
+            object3d: $config->lib_obj3d,
+            texture: '$config->lib_tex',
+            material: '$config->lib_mat',
+            forceField: '$config->lib_ff',
+            animation: '$config->lib_anim'
+        };
+        MATERIAL3DEDITOR_CONFIG.editor = {
+            files: {
+                'upload_url': '$files_up',
+                'download_url': '$files_down'
+            }
+        };
+        var container = document.getElementById('m3d-editor');
+        Material3dEditor.run(container);
+        loadScene('$filename', '$where');
+        function loadScene(fname, where){
+            if(fname){
+                var old_download_url = Material3dEditor.files.download_url;
+                Material3dEditor.files.download_url = where === 'gallery' ? (M3DHOST.m3dnet + 'ajax.php?action=load')
+                    : (M3DHOST.ajax + '?action=m3d_load_scene');
+                Material3dEditor.loadScene(fname, 1, true);
+                Material3dEditor.files.download_url = old_download_url;
+            }
+        }
+        function onSaveScene(){
+            var filenameEle = document.getElementById('m3d-filename');
+            var filename = '';
+            if(filenameEle){
+                var filename = filenameEle.value;
+            }
+            if(!filename){
+                alert('Invalid or empty file name!');
+                return;
+            }
+            Material3dEditor.saveScene(filename, 1);
+        }
+        function toggleSettings(){
+            var title = document.getElementById('m3d-editor-title');
+            title.classList.toggle('hide');
+        }
+EOD;
+        return $script;
     }
 
     
