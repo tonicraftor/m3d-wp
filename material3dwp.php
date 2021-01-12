@@ -3,17 +3,17 @@
  * Material3d
  *
  * Plugin Name: Material3d
- * Plugin URI:  https://wordpress.org/plugins/Material3d
+ * Plugin URI:  https://wordpress.org/plugins/material3d
  * Description: Material3d is a platform provides a WYSIWYG way to construct and run interactive 3d scenes on web browsers with VR (Virtual Reality) device support.
  * Version:     1.0.0
- * Author:      Tony Luo
+ * Author:      Tonicraftor
  * Author URI:  https://material3d.net/about.html
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain: m3dwp
  * Domain Path: /languages
  * Requires at least: 4.7
- * Requires PHP: 5.2.4
+ * Requires PHP: 7.0
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License version 2, as published by the Free Software Foundation. You may NOT assume

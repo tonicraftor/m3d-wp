@@ -4,7 +4,7 @@ Contributors: tonicraftor
 Donate link: https://material3d.net/
 Tags: 3d, editor, vr, virtual reality, animation, particle, collision detection
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 5.6
 Stable tag: 1.0.0
 Requires PHP: 7.0
 License: GPLv2 or later
@@ -39,6 +39,15 @@ Base on its good extendibility, more and more objects, materials, animations and
 See https://material3d.net/forum.php to learn how to build a 3d solar system.
 
 See https://material3d.net/documentation.html for detail.
+
+== External links and 3rd party services ==
+
+The plugin contains a few external links to https://material3d.net on "M3d scenes" and "Help/Support" pages.
+on the "M3d scenes" page, examples are listed linking to the gallery of https://material3d.net.
+on the "Help/Support" page, there are a few links of tutorials and documentation and a question form redirecting to https://material3d.net.
+The scenes created with the settings using Material3d.net libraries will import these libraries from https://material3d.net.
+All libraries on Material3d.net are free to use except for some customized libraries required by users.
+If you have any concern about personal data safety, please visit our Pravacy Policy: https://material3d.net/privacypolicy.html, or send email to support@material3d.net.
 
 == Screenshots ==
 
